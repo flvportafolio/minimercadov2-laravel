@@ -14,8 +14,14 @@ class CreateMarcasTable extends Migration
     public function up()
     {
         Schema::create('marcas', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->bigIncrements('idMarca');         //tiene que ser llave primaria foranea
+            $table->string('nombre', 50);                   
+            $table->date('fecha_registro');    
+            $table->time('hora_registro', 0);  
+            $table->enum('estado', ['A', 'I']); 
+            $table->string('hash', 256);    
+
+            $table->foreign('idMarca')->references('idPersona')->on('personas')->onDelete('cascade');   
         });
     }
 
