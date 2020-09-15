@@ -31,16 +31,16 @@
 
       <div class="navbar-collapse collapse justify-content-md-center" id="navprincipal" style="">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item {{request()->routeIs('home')?'active':''}}">
             <a class="nav-link" href="{{route('home')}}">Inicio</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item {{request()->routeIs('producto')?'active':''}}">
             <a class="nav-link" href="{{route('producto')}}">Productos</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item {{request()->routeIs('marca')?'active':''}}">
             <a class="nav-link" href="{{route('marca')}}">Marcas</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item {{request()->routeIs('contacto')?'active':''}}">
             <a class="nav-link" href="{{route('contacto')}}">Contáctanos</a>
           </li>
         </ul>
