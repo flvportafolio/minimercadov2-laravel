@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Marca;
 use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
@@ -103,12 +103,96 @@ class WebController extends Controller
     //pagina de producto del modo web
     public function producto()
     {
-        return view('web.producto');
+        $lista_prod=Producto::TraerLista_Producto();
+        //generacion de bloques de producto en fila y por columnas de 4
+        $seccion_prod='<div class="row pb-2">';
+        foreach ($lista_prod as $indice => $obj) 
+        {
+            $indice+=1;
+            if ($indice%4==0)
+            {
+                $seccion_prod.='
+                <div class="pb-2 col-md-3">
+                <div class="card pt-3">
+                    <img class="mx-auto" src="'.asset('img/producto/'.$obj->foto).'"  height="70px" alt="producto"> 
+                    <div class="card-body">
+                    <h6 class="card-title">'.$obj->nombre.'</h6>
+                    <p class="card-text">'.$obj->descripcion.'</p>
+                    </div>
+                </div>
+                </div>';
+                $seccion_prod.='</div>';
+                $seccion_prod.='<div class="row pb-2">';  
+            }
+            else 
+            {
+                $seccion_prod.='
+                <div class="pb-2 col-md-3">
+                <div class="card pt-3">
+                    <img class="mx-auto" src="'.asset('img/producto/'.$obj->foto).'"  height="70px" alt="producto"> 
+                    <div class="card-body">
+                    <h6 class="card-title">'.$obj->nombre.'</h6>
+                    <p class="card-text">'.$obj->descripcion.'</p>
+                    </div>
+                </div>
+                </div>';
+            }    
+        }
+        $seccion_prod.='</div>';
+        return view('web.producto',compact('seccion_prod'));
     }
     //pagina de marca del modo web
     public function marca()
     {
-        return view('web.marca');
+        $lista_marcas=Marca::TraerLista_Marca();
+
+        //logica de las marcas
+        $alfabeto = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z');        
+        $seccion_marcas="";
+        foreach ($alfabeto as $char)
+        {  
+            $ul1="";
+            $ul2="";
+            $ul3="";
+            $flag=1;
+            $letraok=false;
+            foreach ($lista_marcas as $indice => $item)
+            {
+                $n=ucfirst($item->nombre);
+                if (substr($n, 0, 1)==$char)
+                { 
+                    switch ($flag)
+                    {
+                        case 1:
+                        $letraok=true; 
+                        $ul1.='<li>'.$n.'</li>';
+                        $flag=2;
+                        break;
+                        case 2:
+                        $ul2.='<li>'.$n.'</li>';      
+                        $flag=3;
+                        break;
+                        case 3:
+                        $ul3.='<li>'.$n.'</li>'; 
+                        $flag=1;
+                        break;
+                    }        
+                    unset($lista_marcas[$indice]);
+                }   
+            }
+            if ($letraok)
+            {
+                $seccion_marcas.='<h5>'.$char.'</h5>';
+                $seccion_marcas.='<div class="row">';
+                $seccion_marcas.='<div class="col-md-4">  <ul>'. $ul1.'</ul> </div>';
+                $seccion_marcas.='<div class="col-md-4"> <ul>'. $ul2.'</ul> </div>';
+                $seccion_marcas.='<div class="col-md-4"> <ul>'. $ul3.'</ul> </div>';
+                $seccion_marcas.='</div>';
+            }        
+
+        }
+        //
+        return view('web.marca',compact('seccion_marcas'));
     }
     //pagina de contacto del modo web
     public function contacto()

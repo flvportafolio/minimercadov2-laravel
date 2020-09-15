@@ -9,6 +9,10 @@ use DB;
 class Producto extends Model
 {
     use HasFactory;
+    static public function TraerLista_Producto()
+    {
+        return self::where('estado', '=', 'A')->orderBy('nombre', 'asc')->get();
+    }
     static function TraerLista_UltimosProductos()//devuelve los ultimos 8 registros insertados.
     {
         return self::orderBy('idProducto', 'desc')->take(8)->get();
