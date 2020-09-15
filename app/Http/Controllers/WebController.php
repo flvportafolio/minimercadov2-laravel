@@ -194,9 +194,35 @@ class WebController extends Controller
         //
         return view('web.marca',compact('seccion_marcas'));
     }
+
     //pagina de contacto del modo web
     public function contacto()
     {
         return view('web.contacto');
     }
+
+    //pagina acerca de del modo web
+    public function acerca()
+    {
+        return view('web.acerca');
+    }
+
+    //pagina terminos de servicio del modo web
+    public function terminos()
+    {
+        return view('web.terminos');
+    }
+
+    //pagina cookies del modo web
+    public function cookies()
+    {
+        return view('web.cookies');
+    }
+
+    //pagina politicas de privacidad del modo web
+    public function privacidad()
+    {
+        return view('web.privacidad');
+    }
+
 }

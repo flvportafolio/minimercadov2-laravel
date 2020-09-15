@@ -57,8 +57,8 @@
         <div class="col-md-4 pb-3">
           <h5 class="col-md-12">General</h5>
           <hr>          
-          <li class="col-md-12"><a target="_blank" href="?ruta=acerca" class="text-light">Acerca de Tiendas SC</a></li>
-          <li class="col-md-12"><a target="_blank" href="?ruta=contactanos" class="text-light">Contáctanos</a></li>
+          <li class="col-md-12"><a href="{{route('acerca')}}" class="text-light">Acerca de Tiendas SC</a></li>
+          <li class="col-md-12"><a href="{{route('contacto')}}" class="text-light">Contáctanos</a></li>
           <li class="col-md-12">Horario de Atención:</li> 
           <p class="col-md-12 text-light">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lun - Vier / 9:00 am - 7:00 pm</p>
         </div>
@@ -66,9 +66,9 @@
         <div class="col-md-4 pb-3">
           <h5 class="col-md-12">Preguntas Frecuentes</h5>
           <hr>          
-          <li class="col-md-12"><a target="_blank" href="?ruta=terminos" class="text-light">Términos y Condiciones</a></li>
-          <li class="col-md-12"><a target="_blank" href="?ruta=cookies" class="text-light">Política de Cookies</a></li>
-          <li class="col-md-12"><a target="_blank" href="?ruta=privacidad" class="text-light">Política de Privacidad</a></li> 
+          <li class="col-md-12"><a href="{{route('terminos')}}" class="text-light">Términos y Condiciones</a></li>
+          <li class="col-md-12"><a href="{{route('cookies')}}" class="text-light">Política de Cookies</a></li>
+          <li class="col-md-12"><a href="{{route('privacidad')}}" class="text-light">Política de Privacidad</a></li> 
         </div>
 
         <div class="col-md-4 pb-3">
