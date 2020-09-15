@@ -32,16 +32,16 @@
       <div class="navbar-collapse collapse justify-content-md-center" id="navprincipal" style="">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="javascript:void(0)">Inicio</a>
+            <a class="nav-link" href="{{route('home')}}">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="?ruta=producto">Productos</a>
+            <a class="nav-link" href="{{route('producto')}}">Productos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="?ruta=marca">Marcas</a>
+            <a class="nav-link" href="{{route('marca')}}">Marcas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="?ruta=contactanos">Contáctanos</a>
+            <a class="nav-link" href="{{route('contacto')}}">Contáctanos</a>
           </li>
         </ul>
        

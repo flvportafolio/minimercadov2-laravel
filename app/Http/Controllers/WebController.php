@@ -6,8 +6,8 @@ use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
-class InicioController extends Controller
-{
+class WebController extends Controller
+{   //pagina de inicio del modo web
     public function index()
     {
         $lista_cat=Categoria::orderBy('nombre', 'asc')->get();
@@ -99,5 +99,20 @@ class InicioController extends Controller
         $item_ultimosprod.='</div>';
         
       return view('web.index',compact('cats_items','item_ultimosprod'));
+    }
+    //pagina de producto del modo web
+    public function producto()
+    {
+        return view('web.producto');
+    }
+    //pagina de marca del modo web
+    public function marca()
+    {
+        return view('web.marca');
+    }
+    //pagina de contacto del modo web
+    public function contacto()
+    {
+        return view('web.contacto');
     }
 }
