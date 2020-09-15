@@ -153,4 +153,7 @@ SELECT * FROM bdminimarket.categoria;
 
 INSERT INTO sub_categorias (idSubCategoria, nombre, descripcion,idCategoriaFK,fecha_registro,hora_registro,estado,hash)
 SELECT * FROM bdminimarket.SubCategoria;
+
+INSERT INTO productos (idProducto, nombre, descripcion, foto, idSubCategoriaFK,idMarcaFK,fecha_registro,hora_registro,estado,hash)
+SELECT * FROM bdminimarket.Producto;
 */

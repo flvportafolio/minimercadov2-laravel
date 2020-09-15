@@ -33,11 +33,11 @@
     </a>
   </div>
   <nav class="nav py-3 justify-content-center">
-    '.$cats_items.'
+    {!! $cats_items !!}
   </nav>
   <h3>Productos recientemente agregados</h3>
   <section class="pt-4">
-    '.$item_ultimosprod.'        
+    {!! $item_ultimosprod !!}       
   </section>
 </main>
 @endsection
