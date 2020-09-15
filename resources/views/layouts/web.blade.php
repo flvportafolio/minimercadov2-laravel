@@ -89,7 +89,7 @@
         </div>
       </div>
       <div class="row">
-          <p class="col-md-12 mt-4 text-center">Tiendas SC ©2020, Desarrollado por Estudiantes de la UPDS. | Laravel v{{ Illuminate\Foundation\Application::VERSION }}</p>
+          <p class="col-md-12 mt-4 text-center">Tiendas SC ©2020, Desarrollado por FLVPortafolio. | Laravel v{{ Illuminate\Foundation\Application::VERSION }}</p>
       </div>
     </footer>
     <!-- End Footer -->
