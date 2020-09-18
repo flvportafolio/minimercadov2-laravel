@@ -14,8 +14,16 @@ class CreateUsuarioSistemasTable extends Migration
     public function up()
     {
         Schema::create('usuario_sistemas', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->bigIncrements('idUsuario');         //tiene que ser llave primaria foranea
+            $table->string('alias', 50);      
+            $table->binary('user');                     //equivalente a blob
+            $table->binary('password');                     //equivalente a blob
+            $table->date('fecha_registro');    
+            $table->time('hora_registro', 0);  
+            $table->enum('estado', ['A', 'I']); 
+            $table->string('hash', 256);    
+
+            $table->foreign('idUsuario')->references('idPersona')->on('personas')->onDelete('cascade'); 
         });
     }
 
