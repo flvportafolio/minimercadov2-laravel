@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-session_start();
+//session_start();
 
 use App\Models\UsuarioSistema;
 use App\Models\Producto;
@@ -15,78 +15,68 @@ class LoginController extends Controller
     
     public function index()
     {
-        if(isset($_SESSION["UsuarioRegistrado"]))//se verifica si esta logeado
-        {
-            $lista=UsuarioSistema::Traer_Datos_MenuPrincipal();
-            $lista_prod=Producto::TraerLista_UltimosProductos();
-            $lista_logs=Logeo::TraerLista_UltimosLogeados();
+        $lista=UsuarioSistema::Traer_Datos_MenuPrincipal();
+        $lista_prod=Producto::TraerLista_UltimosProductos();
+        $lista_logs=Logeo::TraerLista_UltimosLogeados();
 
-            // logica para los productos
-            $tabla_prod='
-            <div class="table-responsive-md">
-                <table class="table">
-                <thead class="thead-light">
-                    <tr>               
-                    <th width="5%" scope="col">#</th>
-                    <th width="10%" scope="col">Foto</th>
-                    <th width="20%" scope="col">Nombre</th>
-                    <th width="25%" scope="col">Descripción</th>
-                    <th width="10%" scope="col">Subcategoria</th>
-                    <th width="10%" scope="col">Marca</th>
-                    <th width="20%" scope="col">Fecha y Hora de Creación</th>
-                    </tr>
-                </thead>
-                <tbody>
-            ';
-            foreach ($lista_prod as $indice => $obj)
-            {
-                $indice+=1;
-                $tabla_prod.="<tr><td>$indice</td><td><img src=' ".asset('/img/producto/'.$obj->foto)." ' width='64px' height='64px' alt='producto'></td><td>".$obj->nombre."</td><td>".$obj->descripcion."</td><td>".$obj->subcategoria."</td><td>".$obj->marca."</td><td>".$obj->fecha_registro." ".$obj->hora_registro."</td></tr>";
-            } 
-            $tabla_prod.="</tbody></table></div>";
-            //
-
-            // logica para los logeos
-            $tabla_log='
-            <div class="table-responsive-md">
-                <table class="table">
-                <thead class="thead-light">
+        // logica para los productos
+        $tabla_prod='
+        <div class="table-responsive-md">
+            <table class="table">
+            <thead class="thead-light">
                 <tr>               
-                    <th width="10%"scope="col">#</th>
-                    <th width="30%" scope="col">Nombre Completo</th>
-                    <th width="20%" scope="col">Intentos de Logeo</th>
-                    <th width="20%" scope="col">Fecha de Logeo</th>
-                    <th width="20%" scope="col">Hora de Logeo</th>
+                <th width="5%" scope="col">#</th>
+                <th width="10%" scope="col">Foto</th>
+                <th width="20%" scope="col">Nombre</th>
+                <th width="25%" scope="col">Descripción</th>
+                <th width="10%" scope="col">Subcategoria</th>
+                <th width="10%" scope="col">Marca</th>
+                <th width="20%" scope="col">Fecha y Hora de Creación</th>
                 </tr>
-                </thead>
-                <tbody>
-            ';
-
-            foreach ($lista_logs as $indice => $obj)
-            {
-            $indice+=1;
-            $tabla_log.="<tr><td>$indice</td><td>".$obj->nombre." ".$obj->apellidoPaterno." ".$obj->apellidoMaterno."</td><td>".$obj->intentos."</td><td>".$obj->fechaLogeo."</td><td>".$obj->horaLogeo."</td></tr>";  
-            }
-            $tabla_log.="</tbody></table></div>";
-            //
-
-
-            
-            return view('admin.index',compact('lista','tabla_prod','tabla_log'));
-        }
-        else
+            </thead>
+            <tbody>
+        ';
+        foreach ($lista_prod as $indice => $obj)
         {
-            return redirect('admin/login');
+            $indice+=1;
+            $tabla_prod.="<tr><td>$indice</td><td><img src=' ".asset('/img/producto/'.$obj->foto)." ' width='64px' height='64px' alt='producto'></td><td>".$obj->nombre."</td><td>".$obj->descripcion."</td><td>".$obj->subcategoria."</td><td>".$obj->marca."</td><td>".$obj->fecha_registro." ".$obj->hora_registro."</td></tr>";
+        } 
+        $tabla_prod.="</tbody></table></div>";
+        //
+
+        // logica para los logeos
+        $tabla_log='
+        <div class="table-responsive-md">
+            <table class="table">
+            <thead class="thead-light">
+            <tr>               
+                <th width="10%"scope="col">#</th>
+                <th width="30%" scope="col">Nombre Completo</th>
+                <th width="20%" scope="col">Intentos de Logeo</th>
+                <th width="20%" scope="col">Fecha de Logeo</th>
+                <th width="20%" scope="col">Hora de Logeo</th>
+            </tr>
+            </thead>
+            <tbody>
+        ';
+
+        foreach ($lista_logs as $indice => $obj)
+        {
+        $indice+=1;
+        $tabla_log.="<tr><td>$indice</td><td>".$obj->nombre." ".$obj->apellidoPaterno." ".$obj->apellidoMaterno."</td><td>".$obj->intentos."</td><td>".$obj->fechaLogeo."</td><td>".$obj->horaLogeo."</td></tr>";  
         }
+        $tabla_log.="</tbody></table></div>";
+        //
         
+        return view('admin.index',compact('lista','tabla_prod','tabla_log'));                
     }
 
 
 
-    public function login()
+    public function login()//se mostrara el formulario de logeo 
     {   
         if(isset($_SESSION["UsuarioRegistrado"])){return redirect('admin');}
-        //se muestra el formulario de logeo  
+        
 
         //verificar si existe un mensaje para visualizar
         $msg=(isset($_SESSION["spam_message"]))?  $_SESSION["spam_message"]: "";
@@ -97,6 +87,8 @@ class LoginController extends Controller
             $_SESSION["spam_message"]=null;
 
         }
+
+         
         return view('admin.login',compact('notif_script'));
     }
 

@@ -27,10 +27,10 @@
           <div class="pt-3">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active font-weight-bold" href="?ruta=home">Menu Principal</a>
+                <a class="nav-link  {{request()->routeIs('admin.home')?'font-weight-bold active':'text-dark'}}" href="{{route('admin.home')}}">Menu Principal</a>
               </li>                           
               <li class="nav-item py-2">
-                <a class="nav-link text-dark" href="?ruta=producto">Productos</a>
+                <a class="nav-link  {{request()->routeIs('admin.producto')?'font-weight-bold active':'text-dark'}}" href="{{route('admin.producto')}}">Productos</a>
               </li>
               <li class="nav-item py-2">
                 <a class="nav-link text-dark" href="?ruta=categoria">Categorias</a>
