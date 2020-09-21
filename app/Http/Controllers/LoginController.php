@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    
     public function index()
     {
         if(isset($_SESSION["UsuarioRegistrado"]))//se verifica si esta logeado
@@ -23,6 +24,8 @@ class LoginController extends Controller
         }
         
     }
+
+
 
     public function login()
     {   
@@ -40,6 +43,9 @@ class LoginController extends Controller
         }
         return view('admin.login',compact('notif_script'));
     }
+
+
+
 
     public function checkdata(Request $request)
     {//se verifican los credenciales de acceso
@@ -80,6 +86,9 @@ class LoginController extends Controller
 
         // ver https://laravel.com/docs/8.x/authentication#authenticating-users
     }
+
+
+
     public function logout()
     {   // si hay alguien que quiere cerrar sesion, se la cierra.
 
