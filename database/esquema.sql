@@ -145,6 +145,12 @@ insert into usuariosistema values(1,'administrador', AES_ENCRYPT('admin2020','mi
 INSERT INTO personas (idPersona, nombre, apellidoPaterno,apellidoMaterno,genero,fecha_nac,pais_nac,direccion,correo,telefono,estado_civil,nivel_educ,profesion,foto,fecha_registro,hora_registro,estado,hash)
 SELECT * FROM bdminimarket.Persona;
 
+INSERT INTO cargos (idCargo, nombre, descripcion,fecha_registro,hora_registro,estado,hash)
+SELECT * FROM bdminimarket.cargo;
+
+INSERT INTO usuario_sistemas (idUsuario, alias, user,password,fecha_registro,hora_registro,estado,hash)
+SELECT * FROM bdminimarket.usuariosistema;
+
 INSERT INTO marcas (idMarca, nombre, fecha_registro, hora_registro, estado, hash)
 SELECT * FROM bdminimarket.Marca;
 

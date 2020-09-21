@@ -14,8 +14,16 @@ class CreateLogeosTable extends Migration
     public function up()
     {
         Schema::create('logeos', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->bigIncrements('idLogeo'); 
+            $table->foreignId('idUsuarioFK');
+            $table->integer('intentos');
+            
+            $table->date('fechaLogeo');    
+            $table->time('horaLogeo', 0);  
+            $table->enum('estado', ['A', 'I']); 
+            $table->string('hash', 256);    
+
+            $table->foreign('idUsuarioFK')->references('idPersona')->on('personas')->onDelete('cascade');   
         });
     }
 

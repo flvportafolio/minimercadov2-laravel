@@ -14,8 +14,14 @@ class CreateCargosTable extends Migration
     public function up()
     {
         Schema::create('cargos', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->bigIncrements('idCargo');
+            $table->string('nombre', 50);      
+            $table->string('descripcion', 500)->nullable();
+
+            $table->date('fecha_registro');    
+            $table->time('hora_registro', 0);  
+            $table->enum('estado', ['A', 'I']); 
+            $table->string('hash', 256);  
         });
     }
 
