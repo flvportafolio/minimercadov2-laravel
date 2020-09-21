@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-//session_start();
 
 use App\Models\UsuarioSistema;
 use App\Models\Producto;

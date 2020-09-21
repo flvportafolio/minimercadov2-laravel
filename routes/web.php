@@ -1,8 +1,11 @@
 <?php  //Laravel 8.1
-session_start(); //por el momento
+session_start();
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\LoginController;
+
+use App\Http\Controllers\ProductoController;
 
 
 //rutas principales del modo web 
@@ -27,4 +30,4 @@ Route::get('/admin',[LoginController::class,'index'])->name("admin.home")->middl
   Route::get('/admin/logout',[LoginController::class,'logout'])->name("logout");
 
 //rutas de los modulos del administrador
-Route::view('admin/producto','admin.producto')->name("admin.producto")->middleware('admin');
+Route::get('admin/producto',[ProductoController::class,'index'])->name("admin.producto")->middleware('admin');
