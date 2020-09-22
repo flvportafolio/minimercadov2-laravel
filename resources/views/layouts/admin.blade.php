@@ -27,28 +27,28 @@
           <div class="pt-3">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link  {{request()->routeIs('admin.home')?'font-weight-bold active':'text-dark'}}" href="{{route('admin.home')}}">Menu Principal</a>
+                <a class="nav-link {{request()->routeIs('admin.home')?'font-weight-bold active':'text-dark'}}" href="{{route('admin.home')}}">Menu Principal</a>
               </li>                           
               <li class="nav-item py-2">
-                <a class="nav-link  {{request()->routeIs('admin.producto')?'font-weight-bold active':'text-dark'}}" href="{{route('admin.producto')}}">Productos</a>
+                <a class="nav-link {{request()->routeIs('admin.producto')?'font-weight-bold active':'text-dark'}}" href="{{route('admin.producto')}}">Productos</a>
               </li>
               <li class="nav-item py-2">
-                <a class="nav-link text-dark" href="?ruta=categoria">Categorias</a>
+                <a class="nav-link {{request()->routeIs('admin.categoria')?'font-weight-bold active':'text-dark'}}" href="{{route('admin.categoria')}}">Categorias</a>
               </li>
               <li class="nav-item py-2">
-                <a class="nav-link text-dark" href="?ruta=subcategoria">Subcategorias</a>
+                <a class="nav-link {{request()->routeIs('admin.subcategoria')?'font-weight-bold active':'text-dark'}}" href="{{route('admin.subcategoria')}}">Subcategorias</a>
               </li>
               <li class="nav-item py-2">
-                <a class="nav-link text-dark" href="?ruta=marca">Marcas</a>
+                <a class="nav-link {{request()->routeIs('admin.marca')?'font-weight-bold active':'text-dark'}}" href="{{route('admin.marca')}}">Marcas</a>
               </li> 
               <li class="nav-item py-2">
-                <a class="nav-link text-dark" href="?ruta=usuario">Usuarios</a>
+                <a class="nav-link {{request()->routeIs('admin.usuario')?'font-weight-bold active':'text-dark'}}" href="{{route('admin.usuario')}}">Usuarios</a>
               </li>
               <li class="nav-item btn-group dropright py-2">
-                <a class="nav-link text-dark dropdown-toggle" href="#" data-toggle="dropdown"> Más </a>
+                <a class="nav-link {{(request()->routeIs('admin.cargo')||request()->routeIs('admin.logeo'))?'font-weight-bold active':'text-dark'}} dropdown-toggle" href="#" data-toggle="dropdown"> Más </a>
                 <div class="dropdown-menu bg-light">                                    
-                  <a href="?ruta=cargo" class="dropdown-item text-dark">Cargos</a>
-                  <a href="?ruta=logeo" class="dropdown-item text-dark">Logeos</a>
+                  <a href="{{route('admin.cargo')}}" class="dropdown-item text-dark">Cargos</a>
+                  <a href="{{route('admin.logeo')}}" class="dropdown-item text-dark">Logeos</a>
                 </div>
               </li>
               <li class="nav-item py-2">

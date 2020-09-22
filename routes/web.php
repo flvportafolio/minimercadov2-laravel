@@ -6,6 +6,11 @@ use App\Http\Controllers\WebController;
 use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\SubCategoriaController;
+use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\CargoController;
+use App\Http\Controllers\LogeoController;
 
 
 //rutas principales del modo web 
@@ -31,3 +36,9 @@ Route::get('/admin',[LoginController::class,'index'])->name("admin.home")->middl
 
 //rutas de los modulos del administrador
 Route::get('admin/producto',[ProductoController::class,'index'])->name("admin.producto")->middleware('admin');
+Route::get('admin/categoria',[CategoriaController::class,'index'])->name("admin.categoria")->middleware('admin');
+Route::get('admin/subcategoria',[SubCategoriaController::class,'index'])->name("admin.subcategoria")->middleware('admin');
+Route::get('admin/marca',[MarcaController::class,'index'])->name("admin.marca")->middleware('admin');
+Route::view('admin/usuario','admin.usuario')->name("admin.usuario")->middleware('admin');
+Route::get('admin/cargo',[CargoController::class,'index'])->name("admin.cargo")->middleware('admin');
+Route::get('admin/logeo',[LogeoController::class,'index'])->name("admin.logeo")->middleware('admin');
