@@ -36,7 +36,8 @@ Route::get('/admin',[LoginController::class,'index'])->name("admin.home")->middl
 
 //rutas de los modulos del administrador
 Route::get('admin/producto',[ProductoController::class,'index'])->name("admin.producto")->middleware('admin');
-Route::get('admin/categoria',[CategoriaController::class,'index'])->name("admin.categoria")->middleware('admin');
+//Route::get('admin/categoria',[CategoriaController::class,'index'])->name("admin.categoria")->middleware('admin');
+Route::resource('admin/categoria',CategoriaController::class)->middleware('admin');
 Route::get('admin/subcategoria',[SubCategoriaController::class,'index'])->name("admin.subcategoria")->middleware('admin');
 Route::get('admin/marca',[MarcaController::class,'index'])->name("admin.marca")->middleware('admin');
 Route::view('admin/usuario','admin.usuario')->name("admin.usuario")->middleware('admin');
