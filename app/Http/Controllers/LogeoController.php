@@ -13,8 +13,30 @@ class LogeoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('admin.logeo');
+    {   
+        $lista_logs=Logeo::TraerLista_Logeo();
+        $tabla='
+        <div class="table-responsive-md">
+            <table class="table">
+            <thead class="thead-light">
+            <tr>               
+                <th width="10%"scope="col">#</th>
+                <th width="30%" scope="col">Nombre Completo</th>
+                <th width="20%" scope="col">Intentos de Logeo</th>
+                <th width="20%" scope="col">Fecha de Logeo</th>
+                <th width="20%" scope="col">Hora de Logeo</th>
+            </tr>
+            </thead>
+            <tbody>
+        ';
+        foreach ($lista_logs as $indice => $obj)
+        {
+            $indice+=1;
+            $tabla.="<tr><td>$indice</td><td>".$obj->nombre." ".$obj->apellidoPaterno." ".$obj->apellidoMaterno."</td><td>".$obj->intentos."</td><td>".$obj->fechaLogeo."</td><td>".$obj->horaLogeo."</td></tr>";  
+        } 
+        $tabla.="</tbody></table></div>";
+
+        return view('admin.logeo',compact('tabla','lista_logs'));
     }
 
     /**
