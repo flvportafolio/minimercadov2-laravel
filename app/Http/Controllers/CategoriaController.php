@@ -31,7 +31,7 @@ class CategoriaController extends Controller
         ';
 
         $select_items='';// se usa para generar: <option selected>Selecciona un Valor</option>
-        $btn_status=($lista_cat==null)?"disabled":"";
+        $btn_status=($lista_cat->isEmpty())?"disabled":"";
         foreach ($lista_cat as $indice => $obj_c)
         {
             $indice+=1;
@@ -39,7 +39,6 @@ class CategoriaController extends Controller
             $select_items.="<option value=".$obj_c->hash.">".$obj_c->nombre."</option>";
         }
         $table_cats.="</tbody></table></div>";
-
 
         return view('admin.categoria',compact('table_cats','select_items','btn_status'));
     }
@@ -61,8 +60,16 @@ class CategoriaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {       
+        $res=Categoria::Insertar_Categoria($request->nombre,$request->descripcion);
+        if($res)//se verifica que se inserte correctamente el usuariosistema.
+        {
+            return redirect()->route('categoria.index');
+        }
+        else
+        {
+            return redirect('admin/categoria?error');
+        }
     }
 
     /**
@@ -82,9 +89,19 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function edit(Categoria $categoria)
+    public function edit(Request $request)
     {
-        //
+        
+        
+        [$obj_Categoria,$res]=Categoria::Traer_Categoria($request->hash);
+        if($res)
+        {
+            echo json_encode($obj_Categoria);
+        }
+        else
+        {
+            echo "error";
+        }
     }
 
     /**
@@ -94,9 +111,17 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request)
     {
-        //
+        $res=Categoria::Modificar_Categoria($request->nombre,$request->descripcion,$request->hash_hidden);
+        if($res)//devuelve true si se modifico algun registro
+        {
+            return redirect()->route('categoria.index');
+        }
+        else
+        {
+            return redirect('admin/categoria?error');
+        }
     }
 
     /**
@@ -105,8 +130,16 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categoria $categoria)
+    public function destroy($hash)
     {
-        //
+        $res=Categoria::Borrar_Categoria($hash);
+        if($res)
+        {
+            echo "ok";
+        }
+        else
+        {
+            echo "error al borrar";
+        }
     }
 }

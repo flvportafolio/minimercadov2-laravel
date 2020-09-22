@@ -13,7 +13,7 @@ class Logeo extends Model
       $res=DB::insert("insert into logeos values(0,".$idPersona.",$intentos,CURRENT_DATE(),CURRENT_TIME(),'A','')");	  
       if ($res)
       {
-        $_lastid = DB::getPdo()->lastInsertId();
+          $_lastid = DB::getPdo()->lastInsertId();
           $hash = sha1($_lastid);
           $res = DB::update("Update logeos set hash = '$hash' where idLogeo = ".$_lastid);
       }

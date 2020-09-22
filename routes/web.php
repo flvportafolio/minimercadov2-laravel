@@ -12,7 +12,10 @@ use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\LogeoController;
 
-
+Route::post('/dada',function ()
+{
+  return 'ok ejemplo';
+});
 //rutas principales del modo web 
 Route::get('/',[WebController::class,'index'])->name("home");
 Route::get('/producto',[WebController::class,'producto'])->name("producto");
@@ -36,8 +39,13 @@ Route::get('/admin',[LoginController::class,'index'])->name("admin.home")->middl
 
 //rutas de los modulos del administrador
 Route::get('admin/producto',[ProductoController::class,'index'])->name("admin.producto")->middleware('admin');
-//Route::get('admin/categoria',[CategoriaController::class,'index'])->name("admin.categoria")->middleware('admin');
-Route::resource('admin/categoria',CategoriaController::class)->middleware('admin');
+
+  Route::resource('admin/categoria',CategoriaController::class)->only(['index','destroy'])->middleware('admin');
+  Route::view('admin/categoria/{any}','errors.404',["exception"=>new Exception("La ruta no es valida")])->name('categoria.ruta_invalida');
+  Route::post('admin/categoria/edit', [CategoriaController::class,'edit'])->name("categoria.edit")->middleware('admin');
+  Route::post('admin/categoria/store', [CategoriaController::class,'store'])->name("categoria.store")->middleware('admin');
+  Route::match(['put', 'patch'],'admin/categoria', [CategoriaController::class,'update'])->name("categoria.update")->middleware('admin');
+
 Route::get('admin/subcategoria',[SubCategoriaController::class,'index'])->name("admin.subcategoria")->middleware('admin');
 Route::get('admin/marca',[MarcaController::class,'index'])->name("admin.marca")->middleware('admin');
 Route::view('admin/usuario','admin.usuario')->name("admin.usuario")->middleware('admin');

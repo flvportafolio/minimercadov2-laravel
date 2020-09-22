@@ -21,7 +21,8 @@
   </div>
   <div class="tab-pane fade" id="nuevacategoria" role="tabpanel" aria-labelledby="nuevacategoria-tab">              
     
-    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="?ruta=categoria&accion=new">
+    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="{{route('categoria.store')}}">
+    @csrf
       <div class="form-group">
         <label for="nombre_cat">Nombre:</label>
         <input required type="text" class="form-control" id="nombre_cat" name="nombre">
@@ -49,7 +50,9 @@
           <button type="button" class="btn btn-outline-dark" onclick="llenar_updateform()" {{$btn_status}}>Buscar</button>
       </div>
     </div>
-    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="?ruta=categoria&accion=update">
+    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="{{route('categoria.update')}}">
+        @method('PATCH')
+        @csrf
       <div class="form-group">
         <label for="up_nombre_cat">Nombre:</label>
         <input required type="text" class="form-control" id="up_nombre_cat" name="nombre">
@@ -91,8 +94,9 @@ function llenar_updateform()
   {
     $("#hash_hidden").val(h);
     $.ajax({
+      headers: { 'X-CSRF-TOKEN':'{{csrf_token()}}' },
       type: "POST",
-      url: "controlador/c-update-categoria.php",
+      url: "{{route('categoria.edit')}}",
       data: "hash="+ h,
       success : function(text)
       {   
@@ -118,14 +122,14 @@ function borrar_categoria()
   if(h!=null)
   {
     $.ajax({
-      type: "POST",
-      url: "controlador/c-delete-categoria.php",
-      data: "hash="+ h,
+      headers: { 'X-CSRF-TOKEN':'{{csrf_token()}}' },
+      type: "DELETE",
+      url: "{{route('categoria.destroy',"hash")}}".replace('hash', h),//${$item.'_data'}
       success : function(text)
       {   
           if(text=="ok")
           {
-            location = "index.php?ruta=categoria";
+            location = "{{route('categoria.index')}}";
           }
           else
           {
