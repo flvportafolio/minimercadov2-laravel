@@ -103,7 +103,7 @@ class WebController extends Controller
     //pagina de producto del modo web
     public function producto()
     {
-        $lista_prod=Producto::TraerLista_Producto();
+        $lista_prod=Producto::TraerLista_Producto_asc();
         //generacion de bloques de producto en fila y por columnas de 4
         $seccion_prod='<div class="row pb-2">';
         foreach ($lista_prod as $indice => $obj) 

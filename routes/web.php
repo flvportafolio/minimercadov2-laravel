@@ -37,14 +37,20 @@ Route::get('/admin',[LoginController::class,'index'])->name("admin.home")->middl
 
   Route::get('/admin/logout',[LoginController::class,'logout'])->name("logout");
 
-//rutas de los modulos del administrador
+            /*      rutas de los modulos del administrador    */
+
 Route::get('admin/producto',[ProductoController::class,'index'])->name("admin.producto")->middleware('admin');
+Route::post('admin/producto/edit',[ProductoController::class,'edit'])->name("producto.edit")->middleware('admin');
+Route::delete('admin/producto',[ProductoController::class,'destroy'])->name("producto.destroy")->middleware('admin');
+Route::match(['put', 'patch'],'admin/producto', [ProductoController::class,'update'])->name("producto.update")->middleware('admin');
+
 
   Route::resource('admin/categoria',CategoriaController::class)->only(['index','destroy'])->middleware('admin');
   Route::view('admin/categoria/{any}','errors.404',["exception"=>new Exception("La ruta no es valida")])->name('categoria.ruta_invalida');
   Route::post('admin/categoria/edit', [CategoriaController::class,'edit'])->name("categoria.edit")->middleware('admin');
   Route::post('admin/categoria/store', [CategoriaController::class,'store'])->name("categoria.store")->middleware('admin');
   Route::match(['put', 'patch'],'admin/categoria', [CategoriaController::class,'update'])->name("categoria.update")->middleware('admin');
+
 
 Route::get('admin/subcategoria',[SubCategoriaController::class,'index'])->name("admin.subcategoria")->middleware('admin');
 Route::get('admin/marca',[MarcaController::class,'index'])->name("admin.marca")->middleware('admin');

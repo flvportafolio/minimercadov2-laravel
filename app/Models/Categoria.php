@@ -35,7 +35,7 @@ class Categoria extends Model
     static public function Traer_Categoria($hash)
     {
         //$sql="select * from categoria where hash='".$this->hash."' and estado='A'";
-        $datos=self::where('hash', $hash)->where('estado', 'A')->first();		//Si no hay registro como uso first() me devolvera null
+        $datos=self::where('hash', $hash)->where('estado', 'A')->first();		//Si no hay registro, al usar first() me devolvera null
 		$res=false;
 		if(!$datos==null)
 		{			

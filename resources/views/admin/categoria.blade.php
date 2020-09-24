@@ -124,7 +124,7 @@ function borrar_categoria()
     $.ajax({
       headers: { 'X-CSRF-TOKEN':'{{csrf_token()}}' },
       type: "DELETE",
-      url: "{{route('categoria.destroy',"hash")}}".replace('hash', h),//${$item.'_data'}
+      url: "{{route('categoria.destroy',"hash")}}".replace('hash', h),
       success : function(text)
       {   
           if(text=="ok")
