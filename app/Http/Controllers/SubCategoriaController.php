@@ -90,9 +90,17 @@ class SubCategoriaController extends Controller
      * @param  \App\Models\SubCategoria  $subCategoria
      * @return \Illuminate\Http\Response
      */
-    public function edit(SubCategoria $subCategoria)
-    {
-        //
+    public function edit(Request $request)
+    {                
+        [$obj_Subcategoria,$res]=Subcategoria::Traer_Subcategoria($request->hash);
+        if($res)
+        {
+            echo json_encode($obj_Subcategoria);
+        }
+        else
+        {
+            echo "error";
+        }
     }
 
     /**
@@ -102,9 +110,17 @@ class SubCategoriaController extends Controller
      * @param  \App\Models\SubCategoria  $subCategoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubCategoria $subCategoria)
-    {
-        //
+    public function update(Request $request)
+    {        
+        $res=Subcategoria::Modificar_Subcategoria($request->nombre,$request->descripcion,$request->categoria,$request->hash_hidden);
+        if($res)//devuelve true si se modifico algun registro
+        {
+            return redirect()->route('admin.subcategoria');
+        }
+        else
+        {
+            return redirect('admin/subcategoria?error');
+        }
     }
 
     /**

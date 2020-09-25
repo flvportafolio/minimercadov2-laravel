@@ -56,7 +56,9 @@
           <button type="button" class="btn btn-outline-dark" onclick="llenar_updateform()" {{$btn_status}}>Buscar</button>
       </div>
     </div>
-    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="?ruta=subcategoria&accion=update">
+    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="{{route('subcategoria.update')}}">
+    @method('PATCH')
+    @csrf
       <div class="form-group">
         <label for="up_nombre_subcat">Nombre:</label>
         <input required type="text" class="form-control" id="up_nombre_subcat" name="nombre">
@@ -105,8 +107,9 @@ function llenar_updateform()
   {
     $("#hash_hidden").val(h);
     $.ajax({
+      headers: { 'X-CSRF-TOKEN':'{{csrf_token()}}' },
       type: "POST",
-      url: "controlador/c-update-subcategoria.php",
+      url: "{{route('subcategoria.edit')}}",
       data: "hash="+ h,
       success : function(text)
       {   
@@ -115,7 +118,7 @@ function llenar_updateform()
             var objsubcat = JSON.parse(text);
             $("#up_nombre_subcat").val(objsubcat.nombre);
             $("#up_desc_subcat").val(objsubcat.descripcion);                
-            $("#up_inputcat").val(objsubcat.idCategoriaFK.hash);
+            $("#up_inputcat").val(objsubcat.categoria);
             
             $("#btn_mod_subcategoria").prop("disabled", false);
           }
