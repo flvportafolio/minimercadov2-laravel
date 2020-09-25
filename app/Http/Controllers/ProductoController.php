@@ -85,7 +85,46 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //echo $request->nombre.' - '.$request->descripcion.' - '.$request->subcategoria.' - '.$request->marca;
+
+        $nomb_img="prod_default.png";
+        $ruta_img_perfil="img/producto/";        
+
+        if ($request->hasFile('img'))//se verifica si se selecciona una imagen en el formulario
+        {   //echo $_FILES["img"]["tmp_name"].'<br><br>'.$request->img->getPathName();
+             if(pathinfo($request->img->getClientOriginalName(), PATHINFO_EXTENSION)=="jpg")
+            {
+                $nomb_img="img-".date("Y-m-d-H-i-s").".jpg";
+                copy($request->img->getPathName(),$ruta_img_perfil.$nomb_img);
+            }
+            else
+            {
+                if(pathinfo($request->img->getClientOriginalName(), PATHINFO_EXTENSION)=="png")
+                {
+                    $nomb_img="img-".date("Y-m-d-H-i-s").".png";
+                    copy($request->img->getPathName(),$ruta_img_perfil.$nomb_img);
+                }
+                
+            }
+        }
+        else
+        {//si no hay imagen seleccionada hago una copia de la imagen por default
+            $nuevo_fichero = "img-".date("Y-m-d-H-i-s").".png";
+            if (!copy($ruta_img_perfil.$nomb_img, $ruta_img_perfil.$nuevo_fichero)) 
+            {  
+            }
+            $nomb_img=$nuevo_fichero;
+        }
+
+        $res=Producto::Insertar_Producto($request->nombre, $request->descripcion, $nomb_img, $request->subcategoria, $request->marca);
+        if($res)//se verifica que se inserte correctamente el producto.
+        {
+            return redirect()->route('admin.producto');
+        }
+        else
+        {
+            return redirect('admin/producto?error');
+        }
     }
 
     /**
@@ -128,31 +167,34 @@ class ProductoController extends Controller
     public function update(Request $request)
     { //investiar request imagenes en laravel
 
-         $nomb_img=$request->foto_default; //foto
-        /*$ruta_img_perfil="public/img/producto/";//$ruta_img_perfil="vista/img/producto/";
-        //si no se selecciona una imagen en el formulario, el valor de: pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION) es ""  
-        if(pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION)=="jpg")
-        { 
-            unlink($ruta_img_perfil.$nomb_img);
-            $nomb_img="img-".date("Y-m-d-H-i-s").".jpg";
-            copy($_FILES["img"]["tmp_name"],$ruta_img_perfil.$nomb_img);
+        $nomb_img=$request->foto_default; //foto
+        $ruta_img_perfil="img/producto/";
+        
+        if ($request->hasFile('img'))//se verifica si se selecciona una imagen en el formulario
+        {        
+            if(pathinfo($request->img->getClientOriginalName(),PATHINFO_EXTENSION)=="jpg")
+            { 
+                unlink($ruta_img_perfil.$nomb_img);
+                $nomb_img="img-".date("Y-m-d-H-i-s").".jpg";
+                copy($_FILES["img"]["tmp_name"],$ruta_img_perfil.$nomb_img);
+            }
+            elseif(pathinfo($request->img->getClientOriginalName(),PATHINFO_EXTENSION)=="png")
+            {
+                unlink($ruta_img_perfil.$nomb_img);
+                $nomb_img="img-".date("Y-m-d-H-i-s").".png";
+                copy($_FILES["img"]["tmp_name"],$ruta_img_perfil.$nomb_img);
+            }
         }
-        elseif(pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION)=="png")
-        { 
-            unlink($ruta_img_perfil.$nomb_img);
-            $nomb_img="img-".date("Y-m-d-H-i-s").".png";
-            copy($_FILES["img"]["tmp_name"],$ruta_img_perfil.$nomb_img);
-        }*/
-
+        
         $res=Producto::Modificar_Producto($request->nombre, $request->descripcion, $nomb_img, $request->subcategoria, $request->marca, $request->hash_hidden);
         if($res)//se verifica que se modifique correctamente el producto.
         {
-            return redirect()->route('producto.index');
+            return redirect()->route('admin.producto');
         }
         else
         {
             return redirect('admin/producto?error');
-        } 
+        }
     }
 
     /**

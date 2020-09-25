@@ -10,6 +10,27 @@ class Producto extends Model
 {
 		use HasFactory;
 		public $timestamps = false;
+
+
+		static public function Insertar_Producto($nombre, $descripcion, $foto, $subcategoria, $marca)
+		{
+			$idsub_cat=DB::table('sub_categorias')->where('hash', $subcategoria)->value('idSubCategoria');			
+			$id_marca=DB::table('marcas')->where('hash', $marca)->value('idMarca');
+			
+			//$sql="insert into producto values(0,'".$this->nombre."','".$this->descripcion."','".$this->foto."',".$this->idSubCategoriaFK->idSubCategoria.",".$id_marca.",CURRENT_DATE(),CURRENT_TIME(),'A','')";
+			$res=DB::insert("insert into productos values(0,'$nombre','$descripcion','$foto',$idsub_cat,$id_marca,CURRENT_DATE(),CURRENT_TIME(),'A','')");
+
+			if ($res)
+			{
+				$_lastid = DB::getPdo()->lastInsertId();
+				$hash = sha1($_lastid);
+				//$sql = "update producto set hash = '".$this->hash."' where idProducto = ".$this->idProducto;
+				$res = DB::update("update productos set hash = '".$hash."' where idProducto = ".$_lastid);
+			}
+			return $res; 
+		}
+
+
 		static public function TraerLista_Producto()//se usa en el modulo admin
     {								
 				$sql="select prod.nombre,prod.descripcion,prod.foto,sc.nombre AS 'subcategoria',m.nombre AS 'marca',prod.fecha_registro,prod.hora_registro,prod.estado,prod.hash from producto as prod inner JOIN subcategoria AS sc ON sc.idSubCategoria=prod.idSubCategoriaFK INNER JOIN marca AS m ON m.idMarca=prod.idMarcaFK where prod.estado='A'";
@@ -61,19 +82,13 @@ class Producto extends Model
     }
 
 
-		static public function Modificar_Producto($nombre, $descripcion, $nomb_img, $subcategoria, $marca, $hash_hidden)
+		static public function Modificar_Producto($nombre, $descripcion, $nomb_img, $subcategoria, $marca, $hash)
 		{
-			/* $res=false;
-			if($this->idSubCategoriaFK->EstablecerId() && $this->idMarcaFK->EstablecerId()) //si se logra establecer el idSubCategoria y idMarca, se procede a modificar el registro
-			{
-				$sql="update producto set nombre='".$this->nombre."',descripcion='".$this->descripcion."',foto='".$this->foto."',idSubCategoriaFK=".$this->idSubCategoriaFK->idSubCategoria.",idMarcaFK=".$this->idMarcaFK->idMarca." where hash='".$this->hash."'";
-				$res=$this->Execute($sql);//retorna 1 que equivale a true.
-				if(mysqli_affected_rows($this->getCon())>0)//se verifica si hay un registro actualizado
-				{
-					$res=true;
-				}
-			}
-			return $res; */
+			$idsub_cat=DB::table('sub_categorias')->where('hash', $subcategoria)->value('idSubCategoria');			
+			$id_marca=DB::table('marcas')->where('hash', $marca)->value('idMarca');
+
+			//$sql="update producto set nombre='".$this->nombre."',descripcion='".$this->descripcion."',foto='".$this->foto."',idSubCategoriaFK=".$this->idSubCategoriaFK->idSubCategoria.",idMarcaFK=".$this->idMarcaFK->idMarca." where hash='".$this->hash."'";
+			return self::where('hash', $hash)->update(['nombre' => $nombre,'descripcion' => $descripcion,'foto' => $nomb_img,'idSubCategoriaFK' => $idsub_cat,'idMarcaFK' => $id_marca]);																
 		}
 
 
