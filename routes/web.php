@@ -55,6 +55,9 @@ Route::match(['put', 'patch'],'admin/producto', [ProductoController::class,'upda
 
 
 Route::get('admin/subcategoria',[SubCategoriaController::class,'index'])->name("admin.subcategoria")->middleware('admin');
+Route::delete('admin/subcategoria',[SubCategoriaController::class,'destroy'])->name("subcategoria.destroy")->middleware('admin');
+
+
 Route::get('admin/marca',[MarcaController::class,'index'])->name("admin.marca")->middleware('admin');
 Route::view('admin/usuario','admin.usuario')->name("admin.usuario")->middleware('admin');
 Route::get('admin/cargo',[CargoController::class,'index'])->name("admin.cargo")->middleware('admin');
