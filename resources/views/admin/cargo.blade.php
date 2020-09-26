@@ -113,14 +113,15 @@ function borrar_cargo()
   if(h!=null)
   {
     $.ajax({
-      type: "POST",
-      url: "controlador/c-delete-cargo.php",
+      headers: { 'X-CSRF-TOKEN':'{{csrf_token()}}' },
+      type: "DELETE",
+      url: "{{route('cargo.destroy')}}",
       data: "hash="+ h,
       success : function(text)
       {   
           if(text=="ok")
           {
-            location = "index.php?ruta=cargo";
+            location = "{{route('admin.cargo')}}";
           }
           else
           {

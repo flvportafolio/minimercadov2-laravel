@@ -101,8 +101,16 @@ class CargoController extends Controller
      * @param  \App\Models\Cargo  $cargo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cargo $cargo)
+    public function destroy(Request $request)
     {
-        //
+        $res=Cargo::Borrar_Cargo($request->hash);
+        if($res)
+        {
+          echo "ok";
+        }
+        else
+        {
+          echo "error al borrar";
+        }
     }
 }

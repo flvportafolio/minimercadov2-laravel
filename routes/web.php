@@ -66,5 +66,6 @@ Route::view('admin/usuario','admin.usuario')->name("admin.usuario")->middleware(
 
 
   Route::get('admin/cargo',[CargoController::class,'index'])->name("admin.cargo")->middleware('admin');
+  Route::delete('admin/cargo',[CargoController::class,'destroy'])->name("cargo.destroy")->middleware('admin');
 
 Route::get('admin/logeo',[LogeoController::class,'index'])->name("admin.logeo")->middleware('admin');
