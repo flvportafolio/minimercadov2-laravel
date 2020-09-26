@@ -70,7 +70,15 @@ class SubCategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $res=Subcategoria::Insertar_Subcategoria($request->nombre,$request->descripcion,$request->categoria);
+        if($res)//se verifica que se inserte correctamente la subcategoria.
+        {
+            return redirect()->route('admin.subcategoria');
+        }
+        else
+        {
+            return redirect('admin/subcategoria?error');
+        }
     }
 
     /**

@@ -10,6 +10,24 @@ class SubCategoria extends Model
     use HasFactory;
     public $timestamps = false;
 
+
+    static public function Insertar_Subcategoria($nombre,$descripcion,$categoria)
+    {
+        $id_cat=DB::table('categorias')->where('hash', $categoria)->value('idCategoria');
+        //$sql="insert into subcategoria values(0,'".$this->nombre."','".$this->descripcion."',".$this->idCategoriaFK->idCategoria.",CURRENT_DATE(),CURRENT_TIME(),'A','')";
+        $res=DB::insert("insert into sub_categorias values(0,'$nombre','$descripcion',$id_cat,CURRENT_DATE(),CURRENT_TIME(),'A','')");
+        if ($res)
+        {
+            $_lastid = DB::getPdo()->lastInsertId();
+            $hash = sha1($_lastid);
+            //$sql = "update subcategoria set hash = '".$this->hash."' where idSubCategoria = ".$this->idSubCategoria;
+            $res = DB::update("update sub_categorias set hash = '".$hash."' where idSubCategoria = ".$_lastid);
+        }
+		return $res;
+    }
+
+
+
     static public function TraerLista_Subcategoria()
     {
         //$sql="select sc.nombre,sc.descripcion,c.nombre AS 'categoria',sc.fecha_registro,sc.hora_registro,sc.estado,sc.hash from subcategoria AS sc INNER JOIN categoria AS c ON c.idCategoria=sc.idCategoriaFK WHERE sc.estado='A'";

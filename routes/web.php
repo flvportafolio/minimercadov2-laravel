@@ -55,6 +55,7 @@ Route::match(['put', 'patch'],'admin/producto', [ProductoController::class,'upda
 
 
 Route::get('admin/subcategoria',[SubCategoriaController::class,'index'])->name("admin.subcategoria")->middleware('admin');
+Route::post('admin/subcategoria', [SubCategoriaController::class,'store'])->name("subcategoria.store")->middleware('admin');
 Route::post('admin/subcategoria/edit',[SubCategoriaController::class,'edit'])->name("subcategoria.edit")->middleware('admin');
 Route::match(['put', 'patch'],'admin/subcategoria', [SubCategoriaController::class,'update'])->name("subcategoria.update")->middleware('admin');
 Route::delete('admin/subcategoria',[SubCategoriaController::class,'destroy'])->name("subcategoria.destroy")->middleware('admin');
