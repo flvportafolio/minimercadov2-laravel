@@ -63,5 +63,8 @@ Route::delete('admin/subcategoria',[SubCategoriaController::class,'destroy'])->n
 
 Route::get('admin/marca',[MarcaController::class,'index'])->name("admin.marca")->middleware('admin');
 Route::view('admin/usuario','admin.usuario')->name("admin.usuario")->middleware('admin');
-Route::get('admin/cargo',[CargoController::class,'index'])->name("admin.cargo")->middleware('admin');
+
+
+  Route::get('admin/cargo',[CargoController::class,'index'])->name("admin.cargo")->middleware('admin');
+
 Route::get('admin/logeo',[LogeoController::class,'index'])->name("admin.logeo")->middleware('admin');
