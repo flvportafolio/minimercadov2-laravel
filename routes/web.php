@@ -47,8 +47,7 @@ Route::delete('admin/producto',[ProductoController::class,'destroy'])->name("pro
 Route::match(['put', 'patch'],'admin/producto', [ProductoController::class,'update'])->name("producto.update")->middleware('admin');
 
 
-  Route::resource('admin/categoria',CategoriaController::class)->only(['index','destroy'])->middleware('admin');
-  //Route::view('admin/categoria/{any}','errors.404',["exception"=>new Exception("La ruta no es valida")])->name('categoria.ruta_invalida');
+  Route::resource('admin/categoria',CategoriaController::class)->only(['index','destroy'])->middleware('admin');  
   Route::post('admin/categoria/edit', [CategoriaController::class,'edit'])->name("categoria.edit")->middleware('admin');
   Route::post('admin/categoria/store', [CategoriaController::class,'store'])->name("categoria.store")->middleware('admin');
   Route::match(['put', 'patch'],'admin/categoria', [CategoriaController::class,'update'])->name("categoria.update")->middleware('admin');
@@ -61,7 +60,14 @@ Route::match(['put', 'patch'],'admin/subcategoria', [SubCategoriaController::cla
 Route::delete('admin/subcategoria',[SubCategoriaController::class,'destroy'])->name("subcategoria.destroy")->middleware('admin');
 
 
-Route::get('admin/marca',[MarcaController::class,'index'])->name("admin.marca")->middleware('admin');
+  Route::get('admin/marca',[MarcaController::class,'index'])->name("admin.marca")->middleware('admin');
+  Route::post('admin/marca', [MarcaController::class,'store'])->name("marca.store")->middleware('admin');
+  Route::post('admin/marca/edit',[MarcaController::class,'edit'])->name("marca.edit")->middleware('admin');
+  Route::match(['put', 'patch'],'admin/marca', [MarcaController::class,'update'])->name("marca.update")->middleware('admin');
+  Route::delete('admin/marca',[MarcaController::class,'destroy'])->name("marca.destroy")->middleware('admin');
+
+
+
 Route::view('admin/usuario','admin.usuario')->name("admin.usuario")->middleware('admin');
 
 

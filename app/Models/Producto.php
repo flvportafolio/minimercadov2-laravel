@@ -33,7 +33,7 @@ class Producto extends Model
 
 		static public function TraerLista_Producto()//se usa en el modulo admin
     {								
-				$sql="select prod.nombre,prod.descripcion,prod.foto,sc.nombre AS 'subcategoria',m.nombre AS 'marca',prod.fecha_registro,prod.hora_registro,prod.estado,prod.hash from producto as prod inner JOIN subcategoria AS sc ON sc.idSubCategoria=prod.idSubCategoriaFK INNER JOIN marca AS m ON m.idMarca=prod.idMarcaFK where prod.estado='A'";
+				//$sql="select prod.nombre,prod.descripcion,prod.foto,sc.nombre AS 'subcategoria',m.nombre AS 'marca',prod.fecha_registro,prod.hora_registro,prod.estado,prod.hash from producto as prod inner JOIN subcategoria AS sc ON sc.idSubCategoria=prod.idSubCategoriaFK INNER JOIN marca AS m ON m.idMarca=prod.idMarcaFK where prod.estado='A'";
 
 				return self::select('productos.nombre', 'productos.descripcion','productos.foto','sub_categorias.nombre AS subcategoria','marcas.nombre AS marca','productos.fecha_registro','productos.hora_registro','productos.estado','productos.hash')
 					->join('sub_categorias', 'productos.idSubCategoriaFK', '=', 'sub_categorias.idSubCategoria')
