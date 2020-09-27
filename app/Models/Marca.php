@@ -10,11 +10,19 @@ class Marca extends Model
     use HasFactory;
     public $timestamps = false;
 
+    static public function Insertar_Marca($marca,$estado)
+    {
+        $_lastidPersona = DB::getPdo()->lastInsertId();
+        //$sql="insert into marca values(".$this->idMarca->idPersona.",'".$this->nombre."', CURRENT_DATE(),CURRENT_TIME(), '".$this->estado."', SHA1(".$this->idMarca->idPersona."))";
+        $res=DB::insert("insert into marcas values(".$_lastidPersona.",'".$marca."',CURRENT_DATE(),CURRENT_TIME(),'".$estado."',SHA1(".$_lastidPersona."))");
+        return $res;
+	}
+
+
     static public function TraerLista_Marca()
     {
         return self::where('estado', '=', 'A')->orderBy('nombre', 'asc')->get();
     }
-
 
     
     static public function TraerLista_ModuloMarca()
@@ -42,11 +50,15 @@ class Marca extends Model
         return [$datos->toArray(),$res];
     }
 
+    
     static public function Modificar_Marca($marca, $estado, $hash)
     {
         //$sql="update marca set nombre='".$this->nombre."',estado='".$this->estado."' where hash='".$this->hash."'";
         return self::where('hash', $hash)->update(['nombre' => $marca,'estado' => $estado]);    
     }
+
+
+
     static public function Borrar_Marca($hash)
     {
         //$sql="update marca set estado='I' where hash='".$this->hash."'";

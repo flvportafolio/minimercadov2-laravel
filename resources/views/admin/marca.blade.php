@@ -21,7 +21,8 @@
   </div>
   <div class="tab-pane fade" id="crearmarca" role="tabpanel" aria-labelledby="crearmarca-tab">
   
-  <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="?ruta=marca&accion=new" enctype="multipart/form-data">
+  <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="{{route('marca.store')}}" enctype="multipart/form-data">
+  @csrf
     <div class="form-row justify-content-md-center">
       <div class="form-group col-md-3">
         <label for="input_new_name">Nombre</label>

@@ -60,7 +60,45 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nomb_img="default.svg";
+        $ruta_img_perfil="img/perfil/";
+        
+        if ($request->hasFile('img'))//se verifica si se selecciona una imagen en el formulario
+        {
+            if(pathinfo($request->img->getClientOriginalName(), PATHINFO_EXTENSION)=="jpg")
+            {
+                $nomb_img="img-".date("Y-m-d-H-i-s").".jpg";
+                copy($request->img->getPathName(),$ruta_img_perfil.$nomb_img);
+            }
+            else
+            {
+                if(pathinfo($request->img->getClientOriginalName(), PATHINFO_EXTENSION)=="png")
+                {
+                    $nomb_img="img-".date("Y-m-d-H-i-s").".png";
+                    copy($request->img->getPathName(),$ruta_img_perfil.$nomb_img);
+                }
+            }
+        }
+        else 
+        {//si no hay imagen seleccionada hago una copia de la imagen por default
+            $nuevo_fichero = "img-".date("Y-m-d-H-i-s").".svg";
+            if (!copy($ruta_img_perfil.$nomb_img, $ruta_img_perfil.$nuevo_fichero)) 
+            {  
+            }
+            $nomb_img=$nuevo_fichero;
+        }        
+
+        $res1=Persona::Insertar_Persona($request->nombre, $request->app, $request->apm, $request->prof, $request->dir, $nomb_img, $request->fecha, $request->telf, $request->e_civil, $request->n_edu, $request->pais, $request->gen,$request->email,$request->estado);
+
+        $res2=Marca::Insertar_Marca($request->marca,$request->estado);
+        if(!($res1==false && $res2==false))//se verifica que se inserte correctamente la marca.
+        {
+            return redirect()->route('admin.marca');
+        }
+        else
+        {
+            return redirect('admin/marca?error');
+        }
     }
 
     /**
