@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 class Cargo extends Model
 {
     use HasFactory;
@@ -16,6 +16,21 @@ class Cargo extends Model
         //$sql="select * from cargo where estado='A'";
         return self::where('estado', '=', 'A')->get();
     }
+
+    static public function Insertar_Cargo($nombre,$descripcion)
+    {
+        //$sql="insert into cargo values(0,'".$this->nombre."','".$this->descripcion."',CURRENT_DATE(),CURRENT_TIME(),'A','')";
+		$res=DB::insert("insert into cargos values(0,'".$nombre."','".$descripcion."',CURRENT_DATE(),CURRENT_TIME(),'A','')");
+		if ($res)
+        {
+                $_lastid = DB::getPdo()->lastInsertId();
+                $hash = sha1($_lastid);
+                //$sql = "update cargo set hash = '".$this->hash."' where idCargo = ".$this->idCargo;
+                $res = DB::update("update cargos set hash = '".$hash."' where idCargo = ".$_lastid);
+        }
+		return $res;
+    }
+
 
 
     static public function Traer_Cargo($hash)

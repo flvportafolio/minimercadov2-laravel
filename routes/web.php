@@ -66,6 +66,7 @@ Route::view('admin/usuario','admin.usuario')->name("admin.usuario")->middleware(
 
 
   Route::get('admin/cargo',[CargoController::class,'index'])->name("admin.cargo")->middleware('admin');
+  Route::post('admin/cargo', [CargoController::class,'store'])->name("cargo.store")->middleware('admin');
   Route::delete('admin/cargo',[CargoController::class,'destroy'])->name("cargo.destroy")->middleware('admin');
   Route::match(['put', 'patch'],'admin/cargo', [CargoController::class,'update'])->name("cargo.update")->middleware('admin');
   Route::post('admin/cargo/edit',[CargoController::class,'edit'])->name("cargo.edit")->middleware('admin');

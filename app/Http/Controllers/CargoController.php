@@ -57,8 +57,16 @@ class CargoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {                
+        $res=Cargo::Insertar_Cargo($request->nombre,$request->descripcion);
+        if($res)//se verifica que se inserte correctamente el usuariosistema.
+        {
+            return redirect()->route('admin.cargo');
+        }
+        else
+        {
+            return redirect('admin/cargo?error');
+        }
     }
 
     /**
