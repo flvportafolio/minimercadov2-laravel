@@ -17,7 +17,7 @@ class Marca extends Model
 
 
     
-    static function TraerLista_ModuloMarca()
+    static public function TraerLista_ModuloMarca()
 	{
         //$sql="select p.nombre,p.apellidoPaterno,p.apellidoMaterno,m.nombre AS 'marca',m.fecha_registro,m.hora_registro,m.estado,m.hash from marca AS m INNER JOIN persona AS p ON p.idPersona =m.idMarca WHERE m.estado='A' ";		
         return self::from( 'marcas AS m' )->select('p.nombre','p.apellidoPaterno','p.apellidoMaterno','m.nombre AS marca','m.fecha_registro','m.hora_registro','m.estado','m.hash')
@@ -25,6 +25,22 @@ class Marca extends Model
         ->where('m.estado', 'A')->get();
     }    
     
+
+    static public function Traer_Marca($hash)
+    {
+        //$sql="select p.nombre,p.apellidoPaterno,p.apellidoMaterno,m.nombre AS 'marca',p.profesion,p.direccion,p.foto,p.fecha_nac,p.telefono,p.estado_civil,p.nivel_educ,p.correo,p.pais_nac,p.genero,p.estado from marca AS m INNER JOIN persona AS p ON p.idPersona =m.idMarca where m.hash='".$this->hash."' and m.estado='A' ";
+        $datos= self::from( 'marcas AS m' )
+        ->select('p.nombre','p.apellidoPaterno','p.apellidoMaterno','m.nombre AS marca','p.profesion','p.direccion','p.foto','p.fecha_nac','p.telefono','p.estado_civil','p.nivel_educ','p.correo','p.pais_nac','p.genero','p.estado')
+        ->join('personas AS p', 'm.idMarca', '=', 'p.idPersona')
+        ->where('m.hash', $hash)->where('m.estado', 'A')->first();
+        
+		$res=false;
+		if(!$datos==null)
+		{			
+			$res=true;
+		}
+        return [$datos->toArray(),$res];
+    }
 
     static public function Borrar_Marca($hash)
     {

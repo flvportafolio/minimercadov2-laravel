@@ -268,29 +268,30 @@ function llenar_updateform()
   {
     $("#hash_hidden").val(h);
     $.ajax({
+      headers: { 'X-CSRF-TOKEN':'{{csrf_token()}}' },
       type: "POST",
-      url: "controlador/c-update-marca.php",
+      url: "{{route('marca.edit')}}",
       data: "hash="+ h,
       success : function(text)
       {   
           if(text!="error")
           {
             var objmarca = JSON.parse(text);
-            $("#input_up_name").val(objmarca.idMarca.nombre);
-            $("#input_up_marca").val(objmarca.nombre);
-            $("#input_up_app").val(objmarca.idMarca.apellidoPaterno);
-            $("#input_up_apm").val(objmarca.idMarca.apellidoMaterno);
-            $("#input_up_prof").val(objmarca.idMarca.profesion);
-            $("#input_up_dir").val(objmarca.idMarca.direccion);
-            $("#foto_marca_up").val(objmarca.idMarca.foto);
-            $("#input_up_date").val(objmarca.idMarca.fecha_nac);
-            $("#input_up_telf").val(objmarca.idMarca.telefono);
-            $("#input_up_estadoc").val(objmarca.idMarca.estado_civil);
-            $("#input_up_niveledu").val(objmarca.idMarca.nivel_educ);
-            $("#input_up_pais").val(objmarca.idMarca.pais_nac);
+            $("#input_up_name").val(objmarca.nombre);
+            $("#input_up_marca").val(objmarca.marca);
+            $("#input_up_app").val(objmarca.apellidoPaterno);
+            $("#input_up_apm").val(objmarca.apellidoMaterno);
+            $("#input_up_prof").val(objmarca.profesion);
+            $("#input_up_dir").val(objmarca.direccion);
+            $("#foto_marca_up").val(objmarca.foto);
+            $("#input_up_date").val(objmarca.fecha_nac);
+            $("#input_up_telf").val(objmarca.telefono);
+            $("#input_up_estadoc").val(objmarca.estado_civil);
+            $("#input_up_niveledu").val(objmarca.nivel_educ);
+            $("#input_up_pais").val(objmarca.pais_nac);
             //caso del radiobutton de genero
-            (objmarca.idMarca.genero=="M")? $("#input_up_radiogen1").prop("checked",true):$("#input_up_radiogen2").prop("checked",true);
-            $("#input_up_correo").val(objmarca.idMarca.correo); 
+            (objmarca.genero=="M")? $("#input_up_radiogen1").prop("checked",true):$("#input_up_radiogen2").prop("checked",true);
+            $("#input_up_correo").val(objmarca.correo); 
             //caso del radiobutton de estado
             (objmarca.estado=="A")? $("#input_up_radioestado1").prop("checked",true):$("#input_up_radioestado2").prop("checked",true);
             $("#btn_mod_marca").prop("disabled", false);

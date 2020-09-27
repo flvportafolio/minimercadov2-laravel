@@ -80,9 +80,17 @@ class MarcaController extends Controller
      * @param  \App\Models\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function edit(Marca $marca)
+    public function edit(Request $request)
     {
-        //
+        [$obj_Marca,$res]=Marca::Traer_Marca($request->hash);
+        if($res)
+        {
+            echo json_encode($obj_Marca);
+        }
+        else
+        {
+            echo "error";
+        }
     }
 
     /**
