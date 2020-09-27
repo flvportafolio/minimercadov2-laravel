@@ -42,6 +42,11 @@ class Marca extends Model
         return [$datos->toArray(),$res];
     }
 
+    static public function Modificar_Marca($marca, $estado, $hash)
+    {
+        //$sql="update marca set nombre='".$this->nombre."',estado='".$this->estado."' where hash='".$this->hash."'";
+        return self::where('hash', $hash)->update(['nombre' => $marca,'estado' => $estado]);    
+    }
     static public function Borrar_Marca($hash)
     {
         //$sql="update marca set estado='I' where hash='".$this->hash."'";

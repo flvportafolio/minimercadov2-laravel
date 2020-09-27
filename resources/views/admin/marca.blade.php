@@ -138,7 +138,9 @@
           <button type="button" class="btn btn-outline-dark" onclick="llenar_updateform()" {{$btn_status}}>Buscar</button>
       </div>
     </div>
-    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="?ruta=marca&accion=update" enctype="multipart/form-data">
+    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="{{route('marca.update')}}" enctype="multipart/form-data">
+    @method('PATCH')
+    @csrf
       <div class="form-row justify-content-md-center">
         <div class="form-group col-md-3">
           <label for="input_up_name">Nombre</label>

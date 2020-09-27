@@ -176,13 +176,13 @@ class ProductoController extends Controller
             { 
                 unlink($ruta_img_perfil.$nomb_img);
                 $nomb_img="img-".date("Y-m-d-H-i-s").".jpg";
-                copy($_FILES["img"]["tmp_name"],$ruta_img_perfil.$nomb_img);
+                copy($request->img->getPathName(),$ruta_img_perfil.$nomb_img);
             }
             elseif(pathinfo($request->img->getClientOriginalName(),PATHINFO_EXTENSION)=="png")
             {
                 unlink($ruta_img_perfil.$nomb_img);
                 $nomb_img="img-".date("Y-m-d-H-i-s").".png";
-                copy($_FILES["img"]["tmp_name"],$ruta_img_perfil.$nomb_img);
+                copy($request->img->getPathName(),$ruta_img_perfil.$nomb_img);
             }
         }
         
