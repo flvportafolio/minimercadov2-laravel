@@ -78,9 +78,17 @@ class CargoController extends Controller
      * @param  \App\Models\Cargo  $cargo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cargo $cargo)
+    public function edit(Request $request)
     {
-        //
+        [$obj_Cargo,$res]=Cargo::Traer_Cargo($request->hash);
+        if($res)
+        {
+            echo json_encode($obj_Cargo);
+        }
+        else
+        {
+            echo "error";
+        }
     }
 
     /**
@@ -90,9 +98,17 @@ class CargoController extends Controller
      * @param  \App\Models\Cargo  $cargo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cargo $cargo)
+    public function update(Request $request)
     {
-        //
+        $res=Cargo::Modificar_Cargo($request->nombre, $request->descripcion, $request->hash_hidden);
+        if($res)//devuelve true si se modifico algun registro
+        {
+            return redirect()->route('admin.cargo');
+        }
+        else
+        {
+            return redirect('admin/cargo?error');
+        }
     }
 
     /**

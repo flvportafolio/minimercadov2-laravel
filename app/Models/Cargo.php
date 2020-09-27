@@ -18,6 +18,27 @@ class Cargo extends Model
     }
 
 
+    static public function Traer_Cargo($hash)
+	{
+        //$sql="select * from cargo where hash='".$this->hash."' and estado='A'";
+        $datos=self::where('hash', $hash)->where('estado', 'A')->first();
+		$res=false;
+		if(!$datos==null)
+		{			
+			$res=true;
+		}
+        return [$datos->toArray(),$res];
+	}
+
+
+    static public function Modificar_Cargo($nombre,$descripcion,$hash)
+	{
+		//$sql="update cargo set nombre='".$this->nombre."',descripcion='".$this->descripcion."' where hash='".$this->hash."'";
+		return self::where('hash', $hash)->update(['nombre' => $nombre,'descripcion' => $descripcion]);
+    }
+    
+
+
     static public function Borrar_Cargo($hash)
     {
         //$sql="update cargo set estado='I' where hash='".$this->hash."'";

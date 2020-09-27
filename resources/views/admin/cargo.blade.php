@@ -47,7 +47,9 @@
           <button type="button" class="btn btn-outline-dark" onclick="llenar_updateform()" {{$btn_status}}>Buscar</button>
       </div>
     </div>
-    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="?ruta=cargo&accion=update">
+    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="{{route('cargo.update')}}">
+        @method('PATCH')
+        @csrf
       <div class="form-group">
         <label for="up_nombre_cargo">Nombre:</label>
         <input required type="text" class="form-control" id="up_nombre_cargo" name="nombre">
@@ -87,8 +89,9 @@ function llenar_updateform()
   {
     $("#hash_hidden").val(h);
     $.ajax({
+      headers: { 'X-CSRF-TOKEN':'{{csrf_token()}}' },
       type: "POST",
-      url: "controlador/c-update-cargo.php",
+      url: "{{route('cargo.edit')}}",
       data: "hash="+ h,
       success : function(text)
       {   
