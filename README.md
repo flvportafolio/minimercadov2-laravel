@@ -1,4 +1,4 @@
-## About Laravel
+## Acerca de Laravel
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
@@ -8,7 +8,9 @@
 </p>
 
 ## minimercado v2
-Este proyecto es simplemente la migracion del sitio web 'minimercado-DS2-UPDS' a laravel.
+Este proyecto es simplemente la migracion del sitio web 'minimercado-DS2-UPDS' al Framework laravel, se hace uso de Routing, Middleware, Migrations, Blade etc.
+
+Como el Proyecto Original implemento la Programacion Orientada a Objetos y el patron de Arquitectura Modelo Vista Controlador, la migración a Laravel fue sencilla y amigable.
 
 ## License
 
