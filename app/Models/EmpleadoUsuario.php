@@ -7,7 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 class EmpleadoUsuario extends Model
 {
-    use HasFactory;
+		use HasFactory;
+		
+		static public function TraerLista_Empleadousuario()
+		{
+			//$sql="select p.nombre,p.apellidoPaterno,p.apellidoMaterno,c.nombre AS cargo,eu.ci,eu.fecha_registro,eu.hora_registro,eu.estado,eu.hash from empleadousuario AS eu INNER JOIN persona AS p ON p.idPersona=eu.idEmpleado INNER JOIN cargo AS c ON c.idCargo=eu.idCargoFK";		
+			return self::from('empleado_usuarios AS eu')
+			->select('p.nombre', 'p.apellidoPaterno','p.apellidoMaterno','c.nombre AS cargo','eu.ci','eu.fecha_registro','eu.hora_registro','eu.estado','eu.hash')
+			->join('personas AS p', 'p.idPersona', '=', 'eu.idEmpleado')
+			->join('cargos AS c', 'c.idCargo', '=', 'eu.idCargoFK')
+			->get();			
+		}
+
     static public function verificar($user,$password)
     {
         //verifica el logeo de un empleadousuario

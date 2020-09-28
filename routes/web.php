@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\SubCategoriaController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\UsuarioSistemaController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\LogeoController;
 
@@ -68,7 +69,8 @@ Route::delete('admin/subcategoria',[SubCategoriaController::class,'destroy'])->n
 
 
 
-Route::view('admin/usuario','admin.usuario')->name("admin.usuario")->middleware('admin');
+Route::get('admin/usuario',[UsuarioSistemaController::class,'index'])->name("admin.usuario")->middleware('admin');
+Route::post('admin/usuario',[UsuarioSistemaController::class,'store'])->name("admin.store")->middleware('admin');
 
 
   Route::get('admin/cargo',[CargoController::class,'index'])->name("admin.cargo")->middleware('admin');

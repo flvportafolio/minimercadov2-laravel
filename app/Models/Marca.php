@@ -10,11 +10,10 @@ class Marca extends Model
     use HasFactory;
     public $timestamps = false;
 
-    static public function Insertar_Marca($marca,$estado)
+    static public function Insertar_Marca($marca,$estado,$idPersona)
     {
-        $_lastidPersona = DB::getPdo()->lastInsertId();
         //$sql="insert into marca values(".$this->idMarca->idPersona.",'".$this->nombre."', CURRENT_DATE(),CURRENT_TIME(), '".$this->estado."', SHA1(".$this->idMarca->idPersona."))";
-        $res=DB::insert("insert into marcas values(".$_lastidPersona.",'".$marca."',CURRENT_DATE(),CURRENT_TIME(),'".$estado."',SHA1(".$_lastidPersona."))");
+        $res=DB::insert("insert into marcas values(".$idPersona.",'".$marca."',CURRENT_DATE(),CURRENT_TIME(),'".$estado."',SHA1(".$idPersona."))");
         return $res;
 	}
 

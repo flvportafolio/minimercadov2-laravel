@@ -56,7 +56,7 @@ class ProductoController extends Controller
         foreach ($lista_prod as $indice => $obj)
         {
             $indice+=1;
-            $table_prod.="<tr><td>$indice</td><td><img src=' ".asset('img/producto/'.$obj->foto)." ' width='64px' height='64px' alt='producto'></td><td>".$obj->nombre."</td><td>".$obj->descripcion."</td><td>".$obj->subcategoria."</td><td>".$obj->marca."</td><td>".$obj->fecha_registro." ".$obj->hora_registro."</td></tr>";
+            $table_prod.="<tr><td>$indice</td><td><img src='".asset('img/producto/'.$obj->foto)."' width='64px' height='64px' alt='producto'></td><td>".$obj->nombre."</td><td>".$obj->descripcion."</td><td>".$obj->subcategoria."</td><td>".$obj->marca."</td><td>".$obj->fecha_registro." ".$obj->hora_registro."</td></tr>";
             $select_prod.="<option value=".$obj->hash.">".$obj->nombre."</option>";
         }
         $table_prod.="</tbody></table></div>";

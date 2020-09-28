@@ -88,9 +88,9 @@ class MarcaController extends Controller
             $nomb_img=$nuevo_fichero;
         }        
 
-        $res1=Persona::Insertar_Persona($request->nombre, $request->app, $request->apm, $request->prof, $request->dir, $nomb_img, $request->fecha, $request->telf, $request->e_civil, $request->n_edu, $request->pais, $request->gen,$request->email,$request->estado);
+        [$res1,$idPersona]=Persona::Insertar_Persona($request->nombre, $request->app, $request->apm, $request->prof, $request->dir, $nomb_img, $request->fecha, $request->telf, $request->e_civil, $request->n_edu, $request->pais, $request->gen,$request->email,$request->estado);
 
-        $res2=Marca::Insertar_Marca($request->marca,$request->estado);
+        $res2=Marca::Insertar_Marca($request->marca,$request->estado,$idPersona);
         if(!($res1==false && $res2==false))//se verifica que se inserte correctamente la marca.
         {
             return redirect()->route('admin.marca');
