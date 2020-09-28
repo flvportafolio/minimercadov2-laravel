@@ -18,7 +18,15 @@ class EmpleadoUsuario extends Model
 			->join('cargos AS c', 'c.idCargo', '=', 'eu.idCargoFK')
 			->get();			
 		}
-
+		static public function Insertar_Empleadousuario($h_cargo,$ci, $user, $password,$estado,$idPersona)
+		{					
+			$key="minimarket2020";
+			$id_cargo=DB::table('cargos')->where('hash', $h_cargo)->value('idCargo');
+			
+			//$sql="insert into empleadousuario values(".$this->idEmpleado->idPersona.",".$this->idCargoFK->idCargo.",".$this->ci.", AES_ENCRYPT('".$this->user."','$key'), AES_ENCRYPT('".$this->password."','$key'), CURRENT_DATE(),CURRENT_TIME(), '".$this->estado."', SHA1(".$this->idEmpleado->idPersona."))";	
+			$res=DB::insert("insert into empleado_usuarios values(".$idPersona.",".$id_cargo.",".$ci.", AES_ENCRYPT('".$user."','$key'), AES_ENCRYPT('".$password."','$key'), CURRENT_DATE(),CURRENT_TIME(), '".$estado."', SHA1(".$idPersona."))");
+			return $res;    	
+		}
     static public function verificar($user,$password)
     {
         //verifica el logeo de un empleadousuario

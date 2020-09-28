@@ -34,7 +34,7 @@ class UsuarioSistemaController extends Controller
 
         foreach ($lista_empl as $indice => $obj)
         {
-            $select_emp.="<option value=".$obj->hash.">".$obj->idEmpleado->nombre." ".$obj->idEmpleado->apellidoPaterno." ".$obj->idEmpleado->apellidoMaterno."</option>";
+            $select_emp.="<option value=".$obj->hash.">".$obj->nombre." ".$obj->apellidoPaterno." ".$obj->apellidoMaterno."</option>";
         }
 
         $select_cargos="";

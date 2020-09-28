@@ -146,7 +146,8 @@
   </div>
   <div class="tab-pane fade" id="crear_usuarios2" role="tabpanel" aria-labelledby="crear_usuarios2-tab">
     <legend>Crear Usuario Empleado</legend>
-    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="?ruta=usuario&accion=newempleado" enctype="multipart/form-data">
+    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="{{route('empleado.store')}}" enctype="multipart/form-data">
+      @csrf
       <div class="form-row justify-content-md-center">
         <div class="form-group col-md-3">
           <label for="inputname2">Nombre</label>
