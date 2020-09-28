@@ -154,9 +154,17 @@ class UsuarioSistemaController extends Controller
      * @param  \App\Models\UsuarioSistema  $usuarioSistema
      * @return \Illuminate\Http\Response
      */
-    public function edit(UsuarioSistema $usuarioSistema)
-    {
-        //
+    public function edit(Request $request)
+    {        
+        [$obj_UsuarioS,$res]=Usuariosistema::Traer_UsuarioSistema($request->hash);
+        if($res)
+        {
+            echo json_encode($obj_UsuarioS);
+        }
+        else
+        {
+            echo "error";
+        }
     }
 
     /**
@@ -166,9 +174,40 @@ class UsuarioSistemaController extends Controller
      * @param  \App\Models\UsuarioSistema  $usuarioSistema
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UsuarioSistema $usuarioSistema)
+    public function update(Request $request)
     {
-        //
+        $nomb_img=$request->foto_default;
+        $ruta_img_perfil="img/perfil/";
+        if ($request->hasFile('img'))//se verifica si se selecciona una imagen en el formulario
+        {   
+            if(pathinfo($request->img->getClientOriginalName(),PATHINFO_EXTENSION)=="jpg")
+            {
+                unlink($ruta_img_perfil.$nomb_img);
+                $nomb_img="img-".date("Y-m-d-H-i-s").".jpg";
+                copy($request->img->getPathName(),$ruta_img_perfil.$nomb_img);
+            }
+            elseif(pathinfo($request->img->getClientOriginalName(),PATHINFO_EXTENSION)=="png")
+            {
+                unlink($ruta_img_perfil.$nomb_img);
+                $nomb_img="img-".date("Y-m-d-H-i-s").".png";
+                copy($request->img->getPathName(),$ruta_img_perfil.$nomb_img);
+            }
+        }        
+
+        $user=str_replace("'","",(trim($request->user)));
+        $password=str_replace("'","",(trim($request->pass)));
+
+        $res1=Persona::Modificar_Persona($request->nombre, $request->app, $request->apm,$request->prof, $request->dir, $nomb_img, $request->fecha, $request->telf,$request->e_civil,$request->n_edu, $request->pais, $request->gen, $request->email, $request->estado, $request->hash_hidden);
+
+        $res2=Usuariosistema::Modificar_Usuariosistema($request->alias, $user, $password, $request->estado, $request->hash_hidden);
+        if(!($res1==false && $res2==false))//se verifica que se modifique correctamente el UsuarioSistema
+        {
+            return redirect()->route('admin.usuario');
+        }
+        else
+        {
+            return redirect('admin/usuario?error');  
+        }
     }
 
     /**

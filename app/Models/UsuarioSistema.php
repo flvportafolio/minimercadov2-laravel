@@ -8,6 +8,8 @@ use DB;
 class UsuarioSistema extends Model
 {
 		use HasFactory;
+		public $timestamps = false;
+
 		
 		static public function Insertar_Usuariosistema($alias,$user, $password, $estado,$idPersona)
 		{
@@ -16,10 +18,31 @@ class UsuarioSistema extends Model
 				$res=DB::insert("insert into usuario_sistemas values(".$idPersona.",'".$alias."',AES_ENCRYPT('$user','$key'),AES_ENCRYPT('$password','$key'),CURRENT_DATE(),CURRENT_TIME(),'$estado',SHA1(".$idPersona."))");
 				return $res;      
 		}
+
+
 		static public function TraerLista_Usuariosistema()
 		{
 			//$sql="select alias,fecha_registro,hora_registro,estado,hash from usuariosistema";
 			return self::select('alias','fecha_registro','hora_registro','estado','hash')->get();	
+		}
+
+
+
+		static public function Traer_UsuarioSistema($hash)
+		{
+			$key="minimarket2020";
+			//$sql="select p.nombre,p.apellidoPaterno,p.apellidoMaterno,p.profesion,p.direccion,p.foto,p.fecha_nac,p.telefono,p.estado_civil,p.nivel_educ,p.pais_nac,p.genero,p.correo,us.alias,us.estado,AES_DECRYPT(us.user,'$key') as user,AES_DECRYPT(us.password,'$key') as password from usuariosistema as us inner join persona as p on p.idPersona=us.idUsuario where us.hash='".$this->hash."'";
+			
+			$datos=self::from('usuario_sistemas as us')->select('p.nombre','p.apellidoPaterno','p.apellidoMaterno','p.profesion','p.direccion','p.foto','p.fecha_nac','p.telefono','p.estado_civil','p.nivel_educ','p.pais_nac','p.genero','p.correo','us.alias','us.estado',DB::raw("AES_DECRYPT(us.user,'$key') as user"),DB::raw("AES_DECRYPT(us.password,'$key') as password"))
+			->join('personas as p', 'p.idPersona', '=', 'us.idUsuario')		
+			->where('us.hash', $hash)->first();
+
+			$res=false;
+			if(!$datos==null)
+			{			
+				$res=true;
+			}
+			return [$datos->toArray(),$res];
 		}
 
 
@@ -53,5 +76,15 @@ class UsuarioSistema extends Model
 				$lista=array("total_productos"=>$row[0]->total_prod,"total_categorias"=>$row[0]->total_cat,"total_subcategorias"=>$row[0]->total_subcat,"total_marcas"=>$row[0]->total_marca);
 			}
 			return $lista;
-		}    
+		}
+
+
+		static public function Modificar_Usuariosistema($alias, $user, $password, $estado, $hash)
+		{
+			$key="minimarket2020";			
+			//$sql="update usuariosistema set alias='".$this->alias."',user=AES_ENCRYPT('".$this->user."','$key'),password=AES_ENCRYPT('$this->password','$key'),estado='".$this->estado."' where hash='".$this->hash."'";
+			return self::where('hash', $hash)->update(['alias' => $alias,'user' =>  DB::raw("AES_ENCRYPT('".$user."','$key')"),'password' => DB::raw("AES_ENCRYPT('$password','$key')"),'estado' => $estado]);				
+		}
+
+
 }

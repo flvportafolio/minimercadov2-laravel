@@ -72,8 +72,12 @@ Route::delete('admin/subcategoria',[SubCategoriaController::class,'destroy'])->n
 
 Route::get('admin/usuario',[UsuarioSistemaController::class,'index'])->name("admin.usuario")->middleware('admin');
 Route::post('admin/usuario',[UsuarioSistemaController::class,'store'])->name("admin.store")->middleware('admin');
+Route::post('admin/usuario/edit',[UsuarioSistemaController::class,'edit'])->name("admin.edit")->middleware('admin');
+Route::match(['put', 'patch'],'admin/usuario', [UsuarioSistemaController::class,'update'])->name("admin.update")->middleware('admin');
 
 Route::post('admin/empleado',[EmpleadoUsuarioController::class,'store'])->name("empleado.store")->middleware('admin');
+Route::post('admin/empleado/edit',[EmpleadoUsuarioController::class,'edit'])->name("empleado.edit")->middleware('admin');
+Route::match(['put', 'patch'],'admin/empleado', [EmpleadoUsuarioController::class,'update'])->name("empleado.update")->middleware('admin');
 
   Route::get('admin/cargo',[CargoController::class,'index'])->name("admin.cargo")->middleware('admin');
   Route::post('admin/cargo', [CargoController::class,'store'])->name("cargo.store")->middleware('admin');

@@ -8,6 +8,7 @@ use DB;
 class EmpleadoUsuario extends Model
 {
 		use HasFactory;
+		public $timestamps = false;
 		
 		static public function TraerLista_Empleadousuario()
 		{
@@ -18,6 +19,26 @@ class EmpleadoUsuario extends Model
 			->join('cargos AS c', 'c.idCargo', '=', 'eu.idCargoFK')
 			->get();			
 		}
+
+		static public function Traer_Empleadousuario($hash)
+		{
+			$key="minimarket2020";
+			//$sql="select c.hash AS cargo,eu.ci,p.nombre,p.apellidoPaterno,p.apellidoMaterno,p.profesion,p.direccion,p.foto,p.fecha_nac,p.telefono,p.estado_civil,p.nivel_educ,p.pais_nac,p.genero,p.correo,AES_DECRYPT(eu.user,'$key') as user,AES_DECRYPT(eu.password,'$key') as password,eu.estado from empleadousuario AS eu  inner join persona as p on p.idPersona=eu.idEmpleado inner join cargo AS c ON c.idCargo=eu.idCargoFK where eu.hash='".$this->hash."'";			
+			$datos=self::from('empleado_usuarios AS eu')
+			->select('c.hash AS cargo','eu.ci','p.nombre', 'p.apellidoPaterno','p.apellidoMaterno','p.profesion','p.direccion','p.foto','p.fecha_nac','p.telefono','p.estado_civil','p.nivel_educ','p.pais_nac','p.genero','p.correo',DB::raw("AES_DECRYPT(eu.user,'$key') as user"),DB::raw("AES_DECRYPT(eu.password,'$key') as password"),'eu.estado')
+			->join('personas AS p', 'p.idPersona', '=', 'eu.idEmpleado')
+			->join('cargos AS c', 'c.idCargo', '=', 'eu.idCargoFK')
+			->where('eu.hash', $hash)->first();
+
+			$res=false;
+			if(!$datos==null)
+			{			
+				$res=true;
+			}
+			return [$datos->toArray(),$res];
+		}
+
+
 		static public function Insertar_Empleadousuario($h_cargo,$ci, $user, $password,$estado,$idPersona)
 		{					
 			$key="minimarket2020";
@@ -43,5 +64,17 @@ class EmpleadoUsuario extends Model
 				$dat=true;			
 			}
 			return [$dat,$id];
-    }
+		}
+		
+
+		static public function Modificar_Empleadousuario($ci, $user, $password, $h_cargo, $estado, $hash)
+		{			
+			$id_cargo=DB::table('cargos')->where('hash', $h_cargo)->value('idCargo');
+			$key="minimarket2020";
+			//$sql="update empleadousuario set idCargoFK=".$this->idCargoFK->idCargo.",ci='".$this->ci."',user=AES_ENCRYPT('".$this->user."','$key'),password=AES_ENCRYPT('$this->password','$key'),estado='".$this->estado."' where hash='".$this->hash."'";
+			return self::where('hash', $hash)->update(['idCargoFK' => $id_cargo, 'ci'=> $ci, 'user' =>  DB::raw("AES_ENCRYPT('".$user."','$key')"),'password' => DB::raw("AES_ENCRYPT('$password','$key')"),'estado' => $estado]);
+		}
+
+
+
 }

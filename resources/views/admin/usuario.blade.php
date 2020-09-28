@@ -279,7 +279,9 @@
           <button type="button" class="btn btn-outline-dark" onclick="llenar_updateform()" {{$btn_status}}>Buscar</button>
       </div>
     </div>
-    <form class="border border-dark rounded px-2 py-2 my-2" method="post" action="?ruta=usuario&accion=updateadmin" enctype="multipart/form-data">              
+    <form class="border border-dark rounded px-2 py-2 my-2" method="post" action="{{route('admin.update')}}" enctype="multipart/form-data">
+    @method('PATCH')
+    @csrf
       <div class="form-row justify-content-md-center">
         <div class="form-group col-md-3">
           <label for="inputname3">Nombre</label>
@@ -409,7 +411,9 @@
           <button type="button" class="btn btn-outline-dark" onclick="llenar_updateform2()" {{$btn_status_emp}}>Buscar</button>
       </div>
     </div>
-    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="?ruta=usuario&accion=update_empleado" enctype="multipart/form-data">
+    <form class="border border-dark rounded px-2 py-2 mt-2" method="post" action="{{route('empleado.update')}}" enctype="multipart/form-data">
+    @method('PATCH')
+    @csrf
       <div class="form-row justify-content-md-center">
         <div class="form-group col-md-3">
           <label for="inputname_upemp">Nombre</label>
@@ -515,14 +519,14 @@
           </select>
         </div>
         <div class="form-group col-md-2">
-          <label class="col-md-12">Estado</label>
+          <label class="col-md-12 text-danger"><b>Estado</b></label>
           <div class="form-check-inline">
             <input checked type="radio" name="estado" class="form-check-input" id="radioestado_upemp1" value="A">
             <label class="form-check-label" for="radioestado_upemp1">Activo</label>
           </div>
           <div class="form-check-inline">
             <input type="radio" name="estado" class="form-check-input" id="radioestado_upemp2" value="I">
-            <label class="form-check-label" for="radioestado_upemp2">Inactivo</label>
+            <label class="form-check-label text-danger" for="radioestado_upemp2"><b>Inactivo</b></label>
           </div>
         </div>                                                      
       </div>
@@ -540,29 +544,30 @@ function llenar_updateform()
   {
     $("#hash_ad_hidden").val(h);
     $.ajax({
+      headers: { 'X-CSRF-TOKEN':'{{csrf_token()}}' },
       type: "POST",
-      url: "controlador/c-update-usuario-sistema.php",
+      url: "{{route('admin.edit')}}",
       data: "hash="+ h,
       success : function(text)
       {   
           if(text!="error")
           {
             var obj_UsuarioSistema = JSON.parse(text);
-            $("#inputname3").val(obj_UsuarioSistema.idUsuario.nombre);
+            $("#inputname3").val(obj_UsuarioSistema.nombre);
             $("#inputalias2").val(obj_UsuarioSistema.alias);
-            $("#inputapp3").val(obj_UsuarioSistema.idUsuario.apellidoPaterno);
-            $("#inputapm3").val(obj_UsuarioSistema.idUsuario.apellidoMaterno);
-            $("#inputprof3").val(obj_UsuarioSistema.idUsuario.profesion);
-            $("#inputdir3").val(obj_UsuarioSistema.idUsuario.direccion);
-            $("#foto_us_up").val(obj_UsuarioSistema.idUsuario.foto);
-            $("#inputdate3").val(obj_UsuarioSistema.idUsuario.fecha_nac);
-            $("#inputtelf3").val(obj_UsuarioSistema.idUsuario.telefono);
-            $("#inputestado3").val(obj_UsuarioSistema.idUsuario.estado_civil);
-            $("#inputniveledu3").val(obj_UsuarioSistema.idUsuario.nivel_educ);
-            $("#inputpais3").val(obj_UsuarioSistema.idUsuario.pais_nac);
+            $("#inputapp3").val(obj_UsuarioSistema.apellidoPaterno);
+            $("#inputapm3").val(obj_UsuarioSistema.apellidoMaterno);
+            $("#inputprof3").val(obj_UsuarioSistema.profesion);
+            $("#inputdir3").val(obj_UsuarioSistema.direccion);
+            $("#foto_us_up").val(obj_UsuarioSistema.foto);
+            $("#inputdate3").val(obj_UsuarioSistema.fecha_nac);
+            $("#inputtelf3").val(obj_UsuarioSistema.telefono);
+            $("#inputestado3").val(obj_UsuarioSistema.estado_civil);
+            $("#inputniveledu3").val(obj_UsuarioSistema.nivel_educ);
+            $("#inputpais3").val(obj_UsuarioSistema.pais_nac);
             //caso del radiobutton de genero
-            (obj_UsuarioSistema.idUsuario.genero=="M")? $("#radio_upgen1").prop("checked",true):$("#radio_upgen2").prop("checked",true);
-            $("#inputcorreo3").val(obj_UsuarioSistema.idUsuario.correo);
+            (obj_UsuarioSistema.genero=="M")? $("#radio_upgen1").prop("checked",true):$("#radio_upgen2").prop("checked",true);
+            $("#inputcorreo3").val(obj_UsuarioSistema.correo);
             $("#inputuser3").val(obj_UsuarioSistema.user);
             $("#inputPassword3").val(obj_UsuarioSistema.password);
             //caso del radiobutton de estado
@@ -585,33 +590,34 @@ function llenar_updateform2()
   {
     $("#hash_empl_hidden").val(h);
     $.ajax({
+      headers: { 'X-CSRF-TOKEN':'{{csrf_token()}}' },
       type: "POST",
-      url: "controlador/c-update-usuario-empleado.php",
+      url: "{{route('empleado.edit')}}",
       data: "hash="+ h,
       success : function(text)
       {   
           if(text!="error")
           {
             var obj_emp = JSON.parse(text);
-            $("#inputname_upemp").val(obj_emp.idEmpleado.nombre);
+            $("#inputname_upemp").val(obj_emp.nombre);
             $("#inputci_upemp").val(obj_emp.ci);
-            $("#inputapp_upemp").val(obj_emp.idEmpleado.apellidoPaterno);
-            $("#inputapm_upemp").val(obj_emp.idEmpleado.apellidoMaterno);
-            $("#inputprof_upemp").val(obj_emp.idEmpleado.profesion);
-            $("#inputdir_upemp").val(obj_emp.idEmpleado.direccion);
-            $("#foto_empl_up").val(obj_emp.idEmpleado.foto);
-            $("#inputdate_upemp").val(obj_emp.idEmpleado.fecha_nac);
-            $("#inputtelf_upemp").val(obj_emp.idEmpleado.telefono);
-            $("#inputestado_upemp").val(obj_emp.idEmpleado.estado_civil);
-            $("#inputniveledu_upemp").val(obj_emp.idEmpleado.nivel_educ);
-            $("#inputpais_upemp").val(obj_emp.idEmpleado.pais_nac);
+            $("#inputapp_upemp").val(obj_emp.apellidoPaterno);
+            $("#inputapm_upemp").val(obj_emp.apellidoMaterno);
+            $("#inputprof_upemp").val(obj_emp.profesion);
+            $("#inputdir_upemp").val(obj_emp.direccion);
+            $("#foto_empl_up").val(obj_emp.foto);
+            $("#inputdate_upemp").val(obj_emp.fecha_nac);
+            $("#inputtelf_upemp").val(obj_emp.telefono);
+            $("#inputestado_upemp").val(obj_emp.estado_civil);
+            $("#inputniveledu_upemp").val(obj_emp.nivel_educ);
+            $("#inputpais_upemp").val(obj_emp.pais_nac);
             //caso del radiobutton de genero
-            (obj_emp.idEmpleado.genero=="M")? $("#radiogen_upemp1").prop("checked",true):$("#radiogen_upemp2").prop("checked",true);
-            $("#inputcorreo_upemp").val(obj_emp.idEmpleado.correo);
+            (obj_emp.genero=="M")? $("#radiogen_upemp1").prop("checked",true):$("#radiogen_upemp2").prop("checked",true);
+            $("#inputcorreo_upemp").val(obj_emp.correo);
             $("#inputuser_upemp").val(obj_emp.user);
             $("#inputPassword_upemp").val(obj_emp.password);
             //caso del select cargo
-              $("#inputcargo_upemp").val(obj_emp.idCargoFK.hash);
+              $("#inputcargo_upemp").val(obj_emp.cargo);
             //caso del radiobutton de estado
             (obj_emp.estado=="A")? $("#radioestado_upemp1").prop("checked",true):$("#radioestado_upemp2").prop("checked",true);
             $("#btn_mod_empl").prop("disabled", false);
